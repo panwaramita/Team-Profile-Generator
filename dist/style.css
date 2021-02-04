@@ -1,0 +1,17 @@
+/*set the style for the header*/
+.jumbotron
+{
+    background-color:#f54254;
+    color: white;
+    height:120px;
+}
+/*set the margin for the heading tag*/
+h1
+{
+    margin:auto;
+}
+.card-header
+{
+color:white;
+font-weight: bold;
+}
