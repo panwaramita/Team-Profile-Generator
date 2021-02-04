@@ -21,7 +21,7 @@ function checkManagerEngineerInter(result)
 {
     if(result.getRole()=='Engineer')
     {
-        return `<br><li class="list-group-item">GitHub username:${result.getGithub()}</li><br></ul>
+        return `<li class="list-group-item">GitHub username:${result.getGithub()}</li></ul>
         </div>
     </div>`;
     }

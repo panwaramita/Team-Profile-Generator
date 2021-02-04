@@ -1,7 +1,7 @@
 //added the inquirer module
 const inquirer = require('inquirer');
 //add the fs module
-const fs=require('fs');
+const fs = require('fs');
 //add the employee class
 const employee = require('./lib/Employee');
 //add the manager class
@@ -11,10 +11,9 @@ const intern = require('./lib/Intern');
 //add the manager class
 const engineer = require('./lib/Engineer');
 //get the html 
-const details=require('./src/details');
+const details = require('./src/details');
 //function create the prompt to ask user questions
-function CreateQuestions()
-{
+function CreateQuestions() {
     inquirer.prompt([
         {
             name: 'name',
@@ -35,7 +34,7 @@ function CreateQuestions()
             name: 'role',
             type: 'list',
             message: `What is the team member role?`,
-            choices: ['Manager','Engineer', 'Intern']
+            choices: ['Manager', 'Engineer', 'Intern']
 
         }
     ]).then(answers => {
@@ -52,49 +51,44 @@ function CreateQuestions()
             addManager(answers);
         }
         //function ask the user if wants to add more people or we want to quit
-       // addMore();
+        // addMore();
     });
 }
 //function ask user wants to add more people
-function addMore()
-{
-        inquirer.prompt([
-            {
-                name: 'addMore',
-                type: 'list',
-                message: `Do you want to add more team members?`,
-                choices: ['Yes','No']
-    
-            }
-        ]).then(answers=>{
-            if(answers.addMore=='Yes')
-            {
-                   //function to ask if wants to add more people
-                CreateQuestions();
-            }
-            else
-            {  
-                console.log('exit');
-                let startFile=" ";
-                let endFile="";
-                let file="";
-                startFile= fs.readFileSync('./src/start.html','utf-8');
-                endFile=fs.readFileSync('./src/end.html','UTF-8');
-                file=fs.readFileSync('./src/file.html','UTF-8');
-                const finalFile=startFile+file+endFile;
-                console.log("the final file is",finalFile);
-                fs.appendFileSync('./dist/index.html',read,(err)=>{
-                    if(err)
-                    {
-                        console.log(err);
-                    }
-                    else
-                    {
-                        console.log("suceesfully appended in to the file")
-                    }
-                })
-            }
-        });
+function addMore() {
+    inquirer.prompt([
+        {
+            name: 'addMore',
+            type: 'list',
+            message: `Do you want to add more team members?`,
+            choices: ['Yes', 'No']
+
+        }
+    ]).then(answers => {
+        if (answers.addMore == 'Yes') {
+            //function to ask if wants to add more people
+            CreateQuestions();
+        }
+        else {
+            console.log('exit');
+            let startFile = " ";
+            let endFile = "";
+            let file = "";
+            startFile = fs.readFileSync('./src/start.html', 'utf-8');
+            endFile = fs.readFileSync('./src/end.html', 'UTF-8');
+            file = fs.readFileSync('./src/file.html', 'UTF-8');
+            const finalFile = startFile + file + endFile;
+            console.log("the final file is", finalFile);
+            fs.writeFileSync('./dist/index.html', finalFile, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log("suceesfully created the html file")
+                }
+            })
+        }
+    });
 }
 //function to ask about engineer detials
 function addEngineer(data) {
@@ -106,20 +100,18 @@ function addEngineer(data) {
         }
     ]).then(answers => {
         //function to ask if wants to add more people
-        const engineerDetail=new engineer(data.id,data.name,data.email,answers.githubUserName);
+        const engineerDetail = new engineer(data.id, data.name, data.email, answers.githubUserName);
         //adding the data to the file
-        const read=details(engineerDetail);
-        fs.appendFileSync('./src/file.html',read,(err)=>{
-            if(err)
-            {
+        const read = details(engineerDetail);
+        fs.appendFileSync('./src/file.html', read, (err) => {
+            if (err) {
                 console.log(err);
             }
-            else
-            {
+            else {
                 console.log("suceesfully appended in to the file")
             }
         })
-      addMore();
+        addMore();
     });
 }
 //function to ask about inter detials
@@ -132,6 +124,19 @@ function addIntern(answers) {
         }
     ]).then(answers => {
         //function to ask if wants to add more people
+        const internDetail = new intern(data.id, data.name, data.email, answers.school);
+        //adding the data to the file
+        const read = details(internDetail);
+        fs.appendFileSync('./src/file.html', read, (err) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log("suceesfully appended in to the file")
+            }
+        })
+        //function to ask if wants to add more people
+
         addMore();
     });
 }
@@ -144,8 +149,23 @@ function addManager(answers) {
             message: `Enter the office number?`
         }
     ]).then(answers => {
-        //function to ask if wants to add more people
-        addMore();
+        const managerDetail = new manager(data.id, data.name, data.email, answers.officeNumber);
+        //adding the data to the file
+        const read = details(managerDetail);
+        fs.appendFileSync('./src/file.html', read, (err) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log("suceesfully appended in to the file")
+            }
+            //function to ask if wants to add more people
+            addMore();
+        });
     });
-}
-CreateQuestions();
+    }
+function initApp() {
+            fs.unlinkSync('./src/file.html');
+            CreateQuestions();
+        }
+initApp()
