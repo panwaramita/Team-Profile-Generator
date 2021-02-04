@@ -12,27 +12,30 @@ function details(data)
             <li class="list-group-item">ID: ${data.getId()}</li>
             <li class="list-group-item">Email:${data.getEmail()}</li>`
             +
-           checkManagerEngineerInter(data.getRole());
-            +
-            `<li class="list-group-item">Office number: ${data.getRole()}</li>
-        </ul>
-    </div>
-</div>`
+           checkManagerEngineerInter(data);
+            
+        
     
 }
 function checkManagerEngineerInter(result)
 {
-    if(result=='Engineer')
+    if(result.getRole()=='Engineer')
     {
-        return `<li class="list-group-item">GitHub username:${data.githubUserName()}</li>`;
+        return `<br><li class="list-group-item">GitHub username:${result.getGithub()}</li><br></ul>
+        </div>
+    </div>`;
     }
-    else if(result=="Intern")
+    else if(result.getRole()=="Intern")
     {
-        return `<li class="list-group-item">GitHub school:${data.githubUserName()}</li>`; 
+        return `<li class="list-group-item">GitHub school:${result.getSchool()}</li><br></ul>
+        </div>
+    </div>`; 
     }
-    else if(result=='Manager')
+    else if(result.getRole()=='Manager')
     {
-        `<li class="list-group-item">Office number: ${data.getSchool()}</li>`
+        `<li class="list-group-item">Office number: ${result.getNumber()}</li><br></ul>
+        </div>
+    </div>`
     }
 }
 module.exports=details;

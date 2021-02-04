@@ -73,8 +73,26 @@ function addMore()
                 CreateQuestions();
             }
             else
-            {
+            {  
                 console.log('exit');
+                let startFile=" ";
+                let endFile="";
+                let file="";
+                startFile= fs.readFileSync('./src/start.html','utf-8');
+                endFile=fs.readFileSync('./src/end.html','UTF-8');
+                file=fs.readFileSync('./src/file.html','UTF-8');
+                const finalFile=startFile+file+endFile;
+                console.log("the final file is",finalFile);
+                fs.appendFileSync('./dist/index.html',read,(err)=>{
+                    if(err)
+                    {
+                        console.log(err);
+                    }
+                    else
+                    {
+                        console.log("suceesfully appended in to the file")
+                    }
+                })
             }
         });
 }
@@ -91,8 +109,7 @@ function addEngineer(data) {
         const engineerDetail=new engineer(data.id,data.name,data.email,answers.githubUserName);
         //adding the data to the file
         const read=details(engineerDetail);
-        console.log(read);
-        fs.writeFileSync('./dist/index.html',read,(err)=>{
+        fs.appendFileSync('./src/file.html',read,(err)=>{
             if(err)
             {
                 console.log(err);
@@ -102,7 +119,6 @@ function addEngineer(data) {
                 console.log("suceesfully appended in to the file")
             }
         })
-        console.log(engineerDetail);
       addMore();
     });
 }
