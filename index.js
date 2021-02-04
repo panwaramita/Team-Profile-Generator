@@ -2,6 +2,8 @@
 const inquirer = require('inquirer');
 //add the fs module
 const fs = require('fs');
+//add enail validator
+const validateEmail = require('email-validator');
 //add the employee class
 const employee = require('./lib/Employee');
 //add the manager class
@@ -28,7 +30,13 @@ function CreateQuestions() {
         {
             name: 'email',
             type: 'input',
-            message: `Enter the team member's email address?`
+            message: `Enter the team member's email address?`,
+            validate: (email) => {
+                if (validateEmail.validate(email))
+                  return true;
+                else
+                  return `${email} is not valid`
+              }
         },
         {
             name: 'role',
@@ -115,7 +123,7 @@ function addEngineer(data) {
     });
 }
 //function to ask about inter detials
-function addIntern(answers) {
+function addIntern(data) {
     inquirer.prompt([
         {
             name: 'school',
@@ -141,16 +149,23 @@ function addIntern(answers) {
     });
 }
 //function to ask about manager detials
-function addManager(answers) {
+function addManager(data) {
     inquirer.prompt([
         {
             name: 'officeNumber',
             type: 'input',
-            message: `Enter the office number?`
+            message: `Enter the office number?`,
+            validate: (officeNumber) => {
+                if (officeNumber.match(/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g)&&officeNumber.match(/\d/g).length===10)
+                  return true;
+                else
+                  return `${officeNumber} is not valid`
+              }
         }
     ]).then(answers => {
         const managerDetail = new manager(data.id, data.name, data.email, answers.officeNumber);
         //adding the data to the file
+        console.log(managerDetail);
         const read = details(managerDetail);
         fs.appendFileSync('./src/file.html', read, (err) => {
             if (err) {
@@ -159,13 +174,13 @@ function addManager(answers) {
             else {
                 console.log("suceesfully appended in to the file")
             }
-            //function to ask if wants to add more people
-            addMore();
         });
+         //function to ask if wants to add more people
+         addMore();
     });
-    }
+}
 function initApp() {
-            fs.unlinkSync('./src/file.html');
-            CreateQuestions();
-        }
+    fs.unlinkSync('./src/file.html');
+    CreateQuestions();
+}
 initApp()
