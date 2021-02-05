@@ -1,5 +1,6 @@
+//import the engineer file
 const Engineer = require("../lib/Engineer");
-
+//function to create dynamic cards for the imformation enter by the manager
 function details(data)
 {
     return `<div class="card">
@@ -20,6 +21,7 @@ function details(data)
         
     
 }
+//function to addd the icon based on the employee type
 function getTheIcons(result)
 {
     if(result=='Engineer')
@@ -35,7 +37,7 @@ function getTheIcons(result)
         return `<i class="fas fa-mug-hot"></i>`;
     }
 }
-
+//function to check if the employee is engineer intern or manager
 function checkManagerEngineerInter(result)
 {
     if(result.getRole()=='Engineer')

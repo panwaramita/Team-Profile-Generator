@@ -52,7 +52,6 @@ function CreateQuestions() {
 
     ]).then(answers => {
         addManager(answers);
-
         //function ask the user if wants to add more people or we want to quit
         // addMore();
     });
@@ -65,7 +64,6 @@ function addMore() {
             type: 'list',
             message: `Do you want to add more team members?`,
             choices: ['Yes', 'No']
-
         }
     ]).then(answers => {
         if (answers.addMore == 'Yes') {
@@ -76,7 +74,6 @@ function addMore() {
                     type: 'list',
                     message: `What is the team member role?`,
                     choices: ['Engineer', 'Intern']
-
                 }
             ]).then(answers => {
                 if (answers.role == "Engineer") {
@@ -112,100 +109,97 @@ function addMore() {
 }
 //function to ask about engineer detials
 function addEngineer(data) {
-        inquirer.prompt([
-            {
-                name: 'name',
-                type: 'input',
-                message: `Enter the Engineer's name?`
-            },
-            {
-                name: 'id',
-                type: 'input',
-                message: `Enter the Engineer's ID?`
-            },
-            {
-                name: 'email',
-                type: 'input',
-                message: `Enter the Engineer's email address?`,
-                validate: (email) => {
-                    if (validateEmail.validate(email))
-                        return true;
-                    else
-                        return `${email} is not valid`
-                }
-            },
-            {
-                name: 'githubUserName',
-                type: 'input',
-                message: `Enter the Engineer's GitHub User name?`
+    inquirer.prompt([
+        {
+            name: 'name',
+            type: 'input',
+            message: `Enter the Engineer's name?`
+        },
+        {
+            name: 'id',
+            type: 'input',
+            message: `Enter the Engineer's ID?`
+        },
+        {
+            name: 'email',
+            type: 'input',
+            message: `Enter the Engineer's email address?`,
+            validate: (email) => {
+                if (validateEmail.validate(email))
+                    return true;
+                else
+                    return `${email} is not valid`
             }
-        ]).then(answers => {
-            //function to ask if wants to add more people
-            const engineerDetail = new engineer(answers.id, answers.name, answers.email, answers.githubUserName);
-            //adding the data to the file
-            const read = details(engineerDetail);
-            fs.appendFileSync('./src/file.html', read, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                    console.log("suceesfully appended in to the file")
-                }
-            });
-            addMore();
+        },
+        {
+            name: 'githubUserName',
+            type: 'input',
+            message: `Enter the Engineer's GitHub User name?`
+        }
+    ]).then(answers => {
+        //function to ask if wants to add more people
+        const engineerDetail = new engineer(answers.id, answers.name, answers.email, answers.githubUserName);
+        //adding the data to the file
+        const read = details(engineerDetail);
+        fs.appendFileSync('./src/file.html', read, (err) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log("suceesfully appended in to the file")
+            }
         });
-          
+        addMore();
+    });
 }
 //function to ask about inter detials
 function addIntern(data) {
-        inquirer.prompt([
-            {
-                name: 'name',
-                type: 'input',
-                message: `Enter the Intern's name?`
-            },
-            {
-                name: 'id',
-                type: 'input',
-                message: `Enter the Intern's ID?`
-            },
-            {
-                name: 'email',
-                type: 'input',
-                message: `Enter the Intern's email address?`,
-                validate: (email) => {
-                    if (validateEmail.validate(email))
-                        return true;
-                    else
-                        return `${email} is not valid`
-                }
-            },
-            {
-                name: 'school',
-                type: 'input',
-                message: `Enter Intern's the school name?`
+    inquirer.prompt([
+        {
+            name: 'name',
+            type: 'input',
+            message: `Enter the Intern's name?`
+        },
+        {
+            name: 'id',
+            type: 'input',
+            message: `Enter the Intern's ID?`
+        },
+        {
+            name: 'email',
+            type: 'input',
+            message: `Enter the Intern's email address?`,
+            validate: (email) => {
+                if (validateEmail.validate(email))
+                    return true;
+                else
+                    return `${email} is not valid`
             }
-        ]).then(answers => {
-            //function to ask if wants to add more people
-            const internDetail = new intern(answers.id, answers.name, answers.email, answers.school);
-            //adding the data to the file
-            const read = details(internDetail);
-            fs.appendFileSync('./src/file.html', read, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                    console.log("suceesfully appended in to the file")
-                }
-            })
-            //function to ask if wants to add more people
-
-            addMore();
-        });
+        },
+        {
+            name: 'school',
+            type: 'input',
+            message: `Enter Intern's the school name?`
+        }
+    ]).then(answers => {
+        //function to ask if wants to add more people
+        const internDetail = new intern(answers.id, answers.name, answers.email, answers.school);
+        //adding the data to the file
+        const read = details(internDetail);
+        fs.appendFileSync('./src/file.html', read, (err) => {
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log("suceesfully appended in to the file")
+            }
+        })
+        //function to ask if wants to add more people
+        addMore();
+    });
 }
 //function to ask about manager detials
 function addManager(data) {
-
     const managerDetail = new manager(data.id, data.name, data.email, data.officeNumber);
     //adding the data to the file
     console.log(managerDetail);
@@ -221,8 +215,14 @@ function addManager(data) {
     //function to ask if wants to add more people
     addMore();
 }
+//initiate function
 function initApp() {
+    //check if the file exist
+    if(fs.existsSync('./src/file.html'))
+    {
+        //delete the file
     fs.unlinkSync('./src/file.html');
+    }
     CreateQuestions();
 }
 initApp()
