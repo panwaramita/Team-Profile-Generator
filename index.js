@@ -87,7 +87,6 @@ function addMore() {
             });
         }
         else {
-            console.log('exit');
             let startFile = " ";
             let endFile = "";
             let file = "";
