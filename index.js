@@ -95,7 +95,6 @@ function addMore() {
             endFile = fs.readFileSync('./src/end.html', 'UTF-8');
             file = fs.readFileSync('./src/file.html', 'UTF-8');
             const finalFile = startFile + file + endFile;
-            console.log("the final file is", finalFile);
             fs.writeFileSync('./dist/index.html', finalFile, (err) => {
                 if (err) {
                     console.log(err);
@@ -202,7 +201,6 @@ function addIntern(data) {
 function addManager(data) {
     const managerDetail = new manager(data.id, data.name, data.email, data.officeNumber);
     //adding the data to the file
-    console.log(managerDetail);
     const read = details(managerDetail);
     fs.appendFileSync('./src/file.html', read, (err) => {
         if (err) {
@@ -218,10 +216,9 @@ function addManager(data) {
 //initiate function
 function initApp() {
     //check if the file exist
-    if(fs.existsSync('./src/file.html'))
-    {
+    if (fs.existsSync('./src/file.html')) {
         //delete the file
-    fs.unlinkSync('./src/file.html');
+        fs.unlinkSync('./src/file.html');
     }
     CreateQuestions();
 }

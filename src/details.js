@@ -14,7 +14,7 @@ function details(data)
     <div class="card-body" style="background-color: #f2f3f5;">
         <ul class="list-group list-group-flush">
             <li class="list-group-item">ID: ${data.getId()}</li>
-            <li class="list-group-item">Email:<a href="mailto:${data.getEmail()}" target="_blank" rel="noopener noreferrer">${data.getEmail()}</a></li>`
+            <li class="list-group-item">Email:<a href="mailto: ${data.getEmail()}" target="_blank" rel="noopener noreferrer">${data.getEmail()}</a></li>`
             +
            checkManagerEngineerInter(data);
             
@@ -48,7 +48,7 @@ function checkManagerEngineerInter(result)
     }
     else if(result.getRole()=="Intern")
     {
-        return `<li class="list-group-item">School:${result.getSchool()}</li></ul>
+        return `<li class="list-group-item">School: ${result.getSchool()}</li></ul>
         </div>
     </div>`; 
     }
