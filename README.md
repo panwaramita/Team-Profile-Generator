@@ -31,4 +31,9 @@
 
 ## Link
 
-[Portfolio](https://panwaramita.github.io/Updated-Portfolio/)
+* Team Profile Generator Vedio:
+![Team Profile Generator Vedio:](./dist/images/my-team.gif)
+
+* Team Profile Generator Test Vedio:
+![Team Profile Generator Vedio:](./dist/images/my-team-test.gif)
+
