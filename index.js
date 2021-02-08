@@ -52,8 +52,6 @@ function CreateQuestions() {
 
     ]).then(answers => {
         addManager(answers);
-        //function ask the user if wants to add more people or we want to quit
-        // addMore();
     });
 }
 //function ask user wants to add more people

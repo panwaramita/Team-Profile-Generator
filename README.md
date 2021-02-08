@@ -19,7 +19,7 @@
 
 * node js 
 * Visual Studio Code 1.51.1
-* jests
+* jest
 
 ## License
 
